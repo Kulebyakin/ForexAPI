@@ -2,6 +2,9 @@
 
 class User < ActiveRecord::Base
 
+  has_many :accounts
+  has_many :currencies, through: :account
+
   extend Devise::Models
   
   # Include default devise modules. Others available are:
