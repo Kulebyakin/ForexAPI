@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_09_21_123235) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["currency_id"], name: "index_accounts_on_currency_id"
+    t.index ["user_id", "currency_id"], name: "index_accounts_on_user_id_and_currency_id", unique: true
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
