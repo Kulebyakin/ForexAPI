@@ -11,8 +11,8 @@ before(:each) do
     }
     @invalid_account_params = {
       amount: '', 
-      user_id: -1, 
-      currency_id: 0
+      user_id: '', 
+      currency_id: ''
     }
   end
 describe 'POST /api/v1/accounts' do
@@ -27,7 +27,7 @@ it 'returns status 201' do
 context 'when account params is invalid' do
     before { post @create_accaount_url, params: @invalid_account_params, as: :json }
 it 'returns unathorized status 401' do
-      expect(response.status).to eq 401
+      expect(response.status).to eq 422
     end
   end
 end
