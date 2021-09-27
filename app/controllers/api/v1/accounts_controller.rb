@@ -2,10 +2,11 @@ module Api
   module V1
     class AccountsController < ApplicationController
       before_action :set_account, only: [:show, :update, :destroy]
+      before_action :authenticate_api_v1_user!
     
       # GET /accounts
       def index
-        @accounts = Account.all
+        @accounts = Account.where(user: current_api_v1_user)
     
         render json: @accounts
       end
