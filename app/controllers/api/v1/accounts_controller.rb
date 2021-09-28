@@ -2,11 +2,14 @@ module Api
   module V1
     class AccountsController < ApplicationController
       before_action :set_account, only: [:show, :update, :destroy]
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_user!
+
+      after_action :verify_authorized, except: :index
+      after_action :verify_policy_scoped, only: :index
     
       # GET /accounts
       def index
-        @accounts = Account.where(user: current_api_v1_user)
+        @accounts = policy_scope(Account.where(user: current_user))
     
         render json: @accounts
       end
@@ -19,7 +22,8 @@ module Api
       # POST /accounts
       def create
         @account = Account.new(account_params)
-    
+        authorize @account
+
         if @account.save
           render json: @account, status: :created
         else
@@ -45,6 +49,7 @@ module Api
         # Use callbacks to share common setup or constraints between actions.
         def set_account
           @account = Account.find(params[:id])
+          authorize @account
         end
     
         # Only allow a list of trusted parameters through.
