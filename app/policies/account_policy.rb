@@ -6,11 +6,11 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def new?
-    true
+    user_is_owner_of_record?
   end
 
   def create?
-    true
+    user_is_owner_of_record?
   end
 
   def show?
