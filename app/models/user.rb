@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :accounts
   has_many :currencies, through: :account
+  has_many :orders
 
   extend Devise::Models
   
