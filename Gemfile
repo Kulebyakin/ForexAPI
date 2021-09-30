@@ -53,3 +53,4 @@ gem "devise_token_auth", "~> 1.2"
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'pundit', '~> 2.1'
 gem 'aasm', '~> 5.1', '>= 5.1.1'
+gem 'sidekiq', '~> 6.2', '>= 6.2.2'
