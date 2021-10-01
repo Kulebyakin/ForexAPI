@@ -13,20 +13,19 @@ class Order < ApplicationRecord
 
   aasm(:status) do
     state :created, initial: true
-    state :pending
     state :filled
+    state :expired
     state :canceled
 
-    event :pend do
-      transitions from: :created, to: :pending
+    event :expire do
+      transitions from: :created, to: :expired
     end
 
     event :fill do
-      transitions from: :pending, to: :filled
+      transitions from: :created, to: :filled
     end
 
     event :cancel do
-      transitions from: :pending, to: :canceled
       transitions from: :created, to: :canceled
     end
 
