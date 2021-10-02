@@ -1,13 +1,7 @@
-module Api
-  module V1
-    class CurrencyController < ApplicationController
-      before_action :authenticate_user!
+class Api::V1::CurrencyController < Api::V1::BaseController
+  def index
+    @currencies = Currency.all
 
-      def index
-        @currencies = Currency.all
-    
-        render json: @currencies
-      end
-    end
+    render json: @currencies
   end
 end

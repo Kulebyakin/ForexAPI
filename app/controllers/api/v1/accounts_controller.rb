@@ -1,6 +1,5 @@
-class Api::V1::AccountsController < ApplicationController
+class Api::V1::AccountsController < Api::V1::BaseController
   before_action :set_account, only: [:show, :update, :destroy]
-  before_action :authenticate_user!
 
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
