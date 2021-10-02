@@ -1,9 +1,12 @@
 class Api::V1::OrdersController < Api::V1::BaseController
   before_action :set_order, only: [:show, :update, :destroy]
 
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
   # GET /orders
   def index
-    @orders = Order.all
+    @orders = policy_scope(Order.where(user: current_user))
 
     render json: @orders
   end
@@ -16,6 +19,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
   # POST /orders
   def create
     @order = Order.new(order_params)
+    authorize @order
 
     if @order.save
       OrderWorker.perform_async(@order.id)
@@ -44,6 +48,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
+      authorize @order
     end
 
     # Only allow a list of trusted parameters through.
