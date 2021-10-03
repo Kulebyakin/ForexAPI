@@ -2,14 +2,14 @@ require "rails_helper"
 RSpec.describe "Session", :type => :request do
 before(:each) do
     @user =  FactoryBot.create(:user) 
-    @sign_in_url = '/api/v1/auth/sign_in' 
-    @sign_out_url = '/api/v1/auth/sign_out'
+    @sign_in_url = '/auth/sign_in' 
+    @sign_out_url = '/auth/sign_out'
     @login_params = {
         email: @user.email,
         password: @user.password
     }
   end
-describe 'POST /api/v1/auth/sign_in' do
+describe 'POST /auth/sign_in' do
 context 'when login params is valid' do
       before do
         post @sign_in_url, params: @login_params, as: :json
@@ -37,7 +37,7 @@ it 'returns unathorized status 401' do
       end
     end
 end
-describe 'DELETE /api/v1/auth/sign_out' do
+describe 'DELETE /auth/sign_out' do
    
     before do
       #login @user created in the beore block in outer describe block

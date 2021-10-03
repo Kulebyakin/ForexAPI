@@ -1,7 +1,7 @@
 require "rails_helper"
 RSpec.describe "Registration", :type => :request do
 before(:each) do
-    @sign_up_url = '/api/v1/auth/' 
+    @sign_up_url = '/auth/' 
     @signup_params = {
         email: 'user@example.com',
         password: '12345678',
@@ -9,7 +9,7 @@ before(:each) do
     }
   end
 describe 'Email registration method' do
-    describe 'POST /api/v1/auth/' do
+    describe 'POST /auth/' do
 context 'when signup params is valid' do
         before do
           post @sign_up_url, params: @signup_params
