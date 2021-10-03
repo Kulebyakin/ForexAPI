@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_09_30_080442) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
+    t.index ["from_account_id", "to_account_id"], name: "index_orders_on_from_account_id_and_to_account_id", unique: true
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 

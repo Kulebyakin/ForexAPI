@@ -10,5 +10,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :orders, [:from_account_id, :to_account_id], unique: true
   end
 end
