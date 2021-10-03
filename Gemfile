@@ -38,6 +38,7 @@ end
 group :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem 'pundit-matchers', '~> 1.7.0'
 end
 
 group :development do
