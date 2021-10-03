@@ -245,6 +245,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    shoulda-matchers (5.0.0)
+      activesupport (>= 5.2.0)
     sidekiq (6.2.2)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -296,6 +298,7 @@ DEPENDENCIES
   rspec-mocks!
   rspec-rails!
   rspec-support!
+  shoulda-matchers (~> 5.0)
   sidekiq (~> 6.2, >= 6.2.2)
   spring
   tzinfo-data
