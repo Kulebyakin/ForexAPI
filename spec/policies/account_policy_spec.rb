@@ -1,27 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe AccountPolicy, type: :policy do
-  let(:user) { User.new }
+  
+  let(:user) { FactoryBot.create(:user) }
+  let(:currency) { FactoryBot.create(:currency) }
+  let(:account) { FactoryBot.create(:account) }
+  
+  subject { AccountPolicy.new(user, account) }
 
-  subject { described_class }
+  context 'being a visitor' do
+    let(:user) { nil }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { is_expected.to forbid_actions(%i[index create update show destroy]) }
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being other user' do
+    let(:user) { FactoryBot.create(:user) }
+
+    it { is_expected.to forbid_actions(%i[index create update show destroy]) }
   end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context 'being an author of account' do
+    let(:user) { User.create id: 1, email: "user@example.com", password: "123123" }
+    let(:account) { Account.create user_id: 1, currency_id: 1, amount: 30 }
+
+    it { is_expected.to permit_actions(%i[create update show destroy]) }
   end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
 end
