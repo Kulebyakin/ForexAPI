@@ -31,6 +31,18 @@ class Api::V1::AccountsController < Api::V1::BaseController
   # PATCH/PUT /accounts/1
   def update
     if @account.update(account_params)
+
+      # when top up the balance, launch pending orders
+      # if expiry_date not expired
+      order = @account.from_order.where(status: :pending)
+      if order.any?
+        order.each do |o|
+          if o.expiry_date.to_time > Time.now
+            OrderWorker.perform_async(o.id)
+          end
+        end
+      end
+      
       render json: @account
     else
       render json: @account.errors, status: :unprocessable_entity
