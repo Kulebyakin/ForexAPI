@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < Api::V1::BaseController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: [:show, :destroy]
 
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
@@ -30,18 +30,10 @@ class Api::V1::OrdersController < Api::V1::BaseController
     end
   end
 
-  # PATCH/PUT /orders/1
-  def update
-    if @order.update(order_params)
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /orders/1
   def destroy
-    @order.destroy
+    @order.cancel
+    @order.save
   end
 
   private

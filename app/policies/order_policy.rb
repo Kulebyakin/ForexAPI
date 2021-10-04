@@ -17,10 +17,6 @@ class OrderPolicy < ApplicationPolicy
     user_is_owner_of_record?
   end
 
-  def update?
-    user_is_owner_of_record?
-  end
-
   def destroy?
     user_is_owner_of_record?
   end
