@@ -20,7 +20,7 @@ class OrderWorker
         response.body)["Realtime Currency Exchange Rate"]["5. Exchange Rate"].to_f
 
       if order.desired_exchange_rate < current_exchange_rate
-        OrderWorker.perform_at(5.seconds.from_now, id)
+        OrderWorker.perform_at(15.minutes.from_now, id)
       else
         from_account = Account.find(order.from_account_id)
         to_account = Account.find(order.to_account_id)
