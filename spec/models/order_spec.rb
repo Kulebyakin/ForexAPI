@@ -52,7 +52,7 @@ RSpec.describe Order, type: :model do
 
     order.from_account_id = @account[0].id
     order.to_account_id = @account[0].id
-    expect(order).to validate_uniqueness_of(:from_account_id).scoped_to(:to_account_id)
+    expect(order).to_not be_valid
 
     order.from_account_id = @account[0].id
     order.to_account_id = @account[1].id
@@ -74,7 +74,7 @@ RSpec.describe Order, type: :model do
     expect(order).to be_valid
   end
 
-  it 'Has a expiry_date' do
+  it 'Has a expiry_date not in the past' do
     order = Order.new(
       amount: 1, 
       user_id: @user.id,
@@ -83,6 +83,9 @@ RSpec.describe Order, type: :model do
       desired_exchange_rate: 1.2,
       expiry_date: ''
     )
+    expect(order).to_not be_valid
+
+    order.expiry_date = Time.now - 1.day
     expect(order).to_not be_valid
 
     order.expiry_date = Time.now + 1.day

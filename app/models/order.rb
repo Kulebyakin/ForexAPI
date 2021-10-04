@@ -9,6 +9,10 @@ class Order < ApplicationRecord
   validates :desired_exchange_rate, presence: true
   validates :expiry_date, presence: true
 
+  validate :from_account_and_to_account_must_be_different
+  validate :expiry_date_cannot_be_in_the_past
+
+
   include AASM
 
   aasm(:status) do
@@ -37,5 +41,19 @@ class Order < ApplicationRecord
       transitions from: :pending, to: :canceled
     end
 
+  end
+
+
+  def expiry_date_cannot_be_in_the_past
+    if expiry_date.present? && expiry_date < Time.now
+      errors.add(:expiry_date, "can't be in the past")
+    end
+  end
+
+  def from_account_and_to_account_must_be_different
+    if from_account == to_account
+      errors.add(:from_account, "Choose different accounts")
+      errors.add(:to_account, "Choose different accounts")
+    end
   end
 end
