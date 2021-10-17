@@ -1,7 +1,7 @@
 class OrderWorker
   include Sidekiq::Worker
 
-  sidekiq_options retry: 0
+  sidekiq_options retry: 3
 
   def perform(id)
     order = Order.find(id)
